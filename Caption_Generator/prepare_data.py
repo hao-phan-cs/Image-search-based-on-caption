@@ -17,6 +17,7 @@ def extract_features(directory):
 	print(model.summary())
 	# extract feature from each image
 	features = {}
+	count = 0
 	for name in listdir(directory):
 		# load an image from file
 		filename = path.join(directory, name)
@@ -33,17 +34,16 @@ def extract_features(directory):
 		img_id = name.split('.')[0]
 		# store feature
 		features[img_id] = feature
-		print("[INFO] extract features from {0}/{1}".format(name, len(listdir(directory))))
+		count += 1
+		print("[INFO] extract features from {0}: {1}/{2}".format(name, count, len(listdir(directory))))
 	return features
 
 ## prepare text data
 # load doc into memory
 def load_doc(filename):
-	# open the file as read only
 	file = open(filename, 'r')
 	# read all text
 	text = file.read()
-	# close the file
 	file.close()
 	return text
  
@@ -58,13 +58,13 @@ def load_descriptions(doc):
 			continue
 		# take the first token as the image id, the rest as the description
 		image_id, image_desc = tokens[0], tokens[1:]
-		# remove filename from image id
+		# remove extension of image_id (ex: .jpg)
 		image_id = image_id.split('.')[0]
 		# convert description tokens back to string
 		image_desc = ' '.join(image_desc)
 		# create the list if needed
 		if image_id not in mapping:
-			mapping[image_id] = list()
+			mapping[image_id] = []
 		# store description
 		mapping[image_id].append(image_desc)
 	return mapping
