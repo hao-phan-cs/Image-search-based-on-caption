@@ -1,11 +1,9 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
-#!pip install -q tensorflow-gpu==2.0.0-alpha0
-import tensorflow as tf
 
-# Scikit-learn includes many helpful utilities
+import tensorflow as tf
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
-
+from tqdm import tqdm
 import re
 import numpy as np
 import json
@@ -66,7 +64,7 @@ def extract_features(img_name_vector):
     image_dataset = image_dataset.map(
                 load_image, num_parallel_calls=tf.data.experimental.AUTOTUNE).batch(16)
 
-    for img, path in image_dataset:
+    for img, path in tqdm(image_dataset):
         batch_features = image_features_extract_model(img)
         batch_features = tf.reshape(batch_features,
                                     (batch_features.shape[0], -1, batch_features.shape[3]))
@@ -90,32 +88,20 @@ def create_tokenizer(train_captions):
 
     return tokenizer
 
-'''
-def create_caption_vec(tokenizer):
-    train_seqs = tokenizer.texts_to_sequences(train_captions)
-
-    tokenizer.word_index['<pad>'] = 0
-    tokenizer.index_word[0] = '<pad>'
-
-    # Create the tokenized vectors
-    #train_seqs = tokenizer.texts_to_sequences(train_captions)
-
-    # Pad each vector to the max_length of the captions
-    # If you do not provide a max_length value, pad_sequences calculates it automatically
-    cap_vector = tf.keras.preprocessing.sequence.pad_sequences(train_seqs, padding='post')
-
-    return cap_vector
-'''
-
 if __name__ == "__main__":
-    annotation_file = '/content/drive/My Drive/XLA_UD/annotations/captions_train2014.json'
-    image_dir = '/content/drive/My Drive/XLA_UD/mscoco2014/'
+    #annotation_file = '/content/drive/My Drive/XLA_UD/annotations/captions_train2014.json'
+    annotation_file = '/home/mmlab/image_captioning/annotations/captions_train2014.json'
+    #image_dir = '/content/drive/My Drive/XLA_UD/mscoco2014/'
+    image_dir = '/home/mmlab/image_captioning/mscoco2014/'
     train_captions, img_name_vector = create_dataset(annotation_file, image_dir)
-    pickle.dump(train_captions, open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'wb'))
-    pickle.dump(img_name_vector, open('/content/drive/My Drive/XLA_UD/models/img_name_vector.pkl', 'wb'))
+    #pickle.dump(train_captions, open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'wb'))
+    #pickle.dump(img_name_vector, open('/content/drive/My Drive/XLA_UD/models/img_name_vector.pkl', 'wb'))
+    pickle.dump(train_captions, open('/home/mmlab/image_captioning/models/train_captions.pkl', 'wb'))
+    pickle.dump(img_name_vector, open('/home/mmlab/image_captioning/models/img_name_vector.pkl', 'wb'))
 
     tokenizer = create_tokenizer(train_captions)
-    pickle.dump(tokenizer, open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'wb'))
+    #pickle.dump(tokenizer, open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'wb'))
+    pickle.dump(tokenizer, open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'wb'))
     # extract and save features
     extract_features(img_name_vector)
     #

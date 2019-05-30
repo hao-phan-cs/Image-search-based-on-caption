@@ -1,4 +1,3 @@
-# import libraries necessary
 import tensorflow as tf
 
 # Feel free to change these parameters according to your system's configuration

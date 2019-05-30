@@ -1,5 +1,3 @@
-# You'll generate plots of attention in order to see which parts of an image
-# our model focuses on during captioning
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
@@ -20,7 +18,7 @@ units = 512
 def calc_max_length(tensor):
     return max(len(t) for t in tensor)
 
-def evaluate(image, tokenizer, encoder, decoder):
+def generate_desc(image, tokenizer, encoder, decoder):
     # load InceptionV3
     image_model = tf.keras.applications.InceptionV3(include_top=False,
                                                     weights='imagenet')
@@ -29,11 +27,9 @@ def evaluate(image, tokenizer, encoder, decoder):
 
     image_features_extract_model = tf.keras.Model(new_input, hidden_layer)
 
-    #----------------------------------------------------------------------
     train_seqs = tokenizer.texts_to_sequences(train_captions)
     # Calculates the max_length, which is used to store the attention weights
     max_length = calc_max_length(train_seqs)
-    #----------------------------------------------------------------------
 
     attention_plot = np.zeros((max_length, attention_features_shape))
 
@@ -80,28 +76,42 @@ def plot_attention(image, result, attention_plot):
     plt.tight_layout()
     plt.show()
 
-train_captions = pickle.load(open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'rb'))
-tokenizer = pickle.load(open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'rb'))
+if __name__ == "__main__":
+    train_captions = pickle.load(open('/home/mmlab/image_captioning/models/train_captions.pkl', 'rb'))
+    tokenizer = pickle.load(open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'rb'))
 
-vocab_size = len(tokenizer.word_index) + 1 # bug here: vocab_size = 8235 (real 8236)
-encoder = CNN_Encoder(embedding_dim)
-decoder = RNN_Decoder(embedding_dim, units, vocab_size)
-optimizer = tf.keras.optimizers.Adam()
+    vocab_size = len(tokenizer.word_index) + 1
+    encoder = CNN_Encoder(embedding_dim)
+    decoder = RNN_Decoder(embedding_dim, units, vocab_size)
+    optimizer = tf.keras.optimizers.Adam()
 
-checkpoint_path = "/content/drive/My Drive/XLA_UD/checkpoints/train"
-ckpt = tf.train.Checkpoint(encoder=encoder,
-                           decoder=decoder,
-                           optimizer = optimizer)
-ckpt.restore(tf.train.latest_checkpoint(checkpoint_path))
+    checkpoint_path = "/home/mmlab/image_captioning/models/checkpoints"
+    ckpt = tf.train.Checkpoint(encoder=encoder,
+                            decoder=decoder,
+                            optimizer = optimizer)
+    ckpt.restore(tf.train.latest_checkpoint(checkpoint_path))
 
-#image_url = '/content/drive/My Drive/XLA_UD/download.jpg'
-#image_extension = image_url[-4:]
-#image_path = tf.keras.utils.get_file('image'+image_extension,
-                                     #origin=image_url)
-#image_path = '/content/drive/My Drive/XLA_UD/train2014/COCO_train2014_000000581582.jpg'
-image_path = '/content/drive/My Drive/XLA_UD/COCO_test2015_000000000108.jpg'
-result, attention_plot = evaluate(image_path, tokenizer, encoder, decoder)
-print ('Prediction Caption:', ' '.join(result))
-plot_attention(image_path, result, attention_plot)
-# opening the image
-Image.open(image_path)
+    '''
+    ## captions on an image
+    image_path = '/content/drive/My Drive/XLA_UD/abc.jpg'
+    result, attention_plot = generate_desc(image_path, tokenizer, encoder, decoder)
+    print ('Prediction Caption:', ' '.join(result))
+    plot_attention(image_path, result, attention_plot)
+    # opening the image
+    Image.open(image_path)
+    '''
+
+    # captions on the test set
+    img_names_test = pickle.load(open('/home/mmlab/image_captioning/models/img_names_test.pkl', 'rb'))
+    captions_test = pickle.load(open('/home/mmlab/image_captioning/models/captions_test.pkl', 'rb'))
+
+    rid = np.random.randint(0, len(img_names_test))
+    image = img_names_test[rid]
+    real_caption = ' '.join([tokenizer.index_word[i] for i in captions_test[rid] if i not in [0]])
+    result, attention_plot = generate_desc(image, tokenizer, encoder, decoder)
+
+    print ('Real Caption:', real_caption)
+    print ('Prediction Caption:', ' '.join(result))
+    plot_attention(image, result, attention_plot)
+    # opening the image
+    Image.open(img_names_test[rid])

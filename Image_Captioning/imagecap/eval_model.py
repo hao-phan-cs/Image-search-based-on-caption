@@ -1,5 +1,3 @@
-# You'll generate plots of attention in order to see which parts of an image
-# our model focuses on during captioning
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
@@ -30,12 +28,10 @@ def generate_desc(image, tokenizer, encoder, decoder):
 
     image_features_extract_model = tf.keras.Model(new_input, hidden_layer)
 
-    #----------------------------------------------------------------------
-    train_captions = pickle.load(open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'rb'))
+    train_captions = pickle.load(open('/home/mmlab/image_captioning/models/train_captions.pkl', 'rb'))
     train_seqs = tokenizer.texts_to_sequences(train_captions)
     # Calculates the max_length, which is used to store the attention weights
     max_length = calc_max_length(train_seqs)
-    #----------------------------------------------------------------------
 
     #attention_plot = np.zeros((max_length, attention_features_shape))
 
@@ -64,9 +60,9 @@ def generate_desc(image, tokenizer, encoder, decoder):
     return result
 
 # evaluate the skill of the model
-def evaluate_model(encoder, decoder, descriptions, photos, tokenizer):
-    img_names_test = pickle.load(open('/content/drive/My Drive/XLA_UD/models/img_names_test.pkl', 'rb'))
-    captions_test = pickle.load(open('/content/drive/My Drive/XLA_UD/models/captions_test.pkl', 'rb'))
+def evaluate_model(encoder, decoder, tokenizer):
+    img_names_test = pickle.load(open('/home/mmlab/image_captioning/models/img_names_test.pkl', 'rb'))
+    captions_test = pickle.load(open('/home/mmlab/image_captioning/models/captions_test.pkl', 'rb'))
 
     actual, predicted = list(), list()
 	# step over the whole set
@@ -84,25 +80,18 @@ def evaluate_model(encoder, decoder, descriptions, photos, tokenizer):
     print('BLEU-3: %f' % corpus_bleu(actual, predicted, weights=(0.3, 0.3, 0.3, 0)))
     print('BLEU-4: %f' % corpus_bleu(actual, predicted, weights=(0.25, 0.25, 0.25, 0.25)))
 
-'''
-#--------------------------------------------main()-------------------------------------------------
-train_captions = pickle.load(open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'rb'))
-tokenizer = pickle.load(open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'rb'))
+if __name__ == "__main__":
+    tokenizer = pickle.load(open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'rb'))
+    
+    vocab_size = len(tokenizer.word_index) + 1
+    encoder = CNN_Encoder(embedding_dim)
+    decoder = RNN_Decoder(embedding_dim, units, vocab_size)
+    optimizer = tf.keras.optimizers.Adam()
 
-vocab_size = len(tokenizer.word_index) + 1 + 1 # bug here: vocab_size = 8235 (real 8236)
-encoder = CNN_Encoder(embedding_dim)
-decoder = RNN_Decoder(embedding_dim, units, vocab_size)
-optimizer = tf.keras.optimizers.Adam()
+    checkpoint_path = "/home/mmlab/image_captioning/models/checkpoints"
+    ckpt = tf.train.Checkpoint(encoder=encoder,
+                            decoder=decoder,
+                            optimizer = optimizer)
+    ckpt.restore(tf.train.latest_checkpoint(checkpoint_path))
 
-checkpoint_path = "/content/drive/My Drive/XLA_UD/checkpoints/train"
-ckpt = tf.train.Checkpoint(encoder=encoder,
-                           decoder=decoder,
-                           optimizer = optimizer)
-ckpt.restore(tf.train.latest_checkpoint(checkpoint_path))
-
-image_path = '/content/drive/My Drive/XLA_UD/COCO_test2015_000000000108.jpg'
-result = evaluate(image_path, tokenizer, encoder, decoder)
-print ('Prediction Caption:', ' '.join(result))
-# opening the image
-Image.open(image_path)
-'''
+    evaluate_model(encoder, decoder, tokenizer)
