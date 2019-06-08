@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
-from PIL import Image
 import numpy as np
 import tensorflow as tf
 import pickle
+import cv2
 from prepare_data import load_image
 from generate_model import BahdanauAttention, CNN_Encoder, RNN_Decoder
 
@@ -77,15 +77,15 @@ def plot_attention(image, result, attention_plot):
     plt.show()
 
 if __name__ == "__main__":
-    train_captions = pickle.load(open('/home/mmlab/image_captioning/models/train_captions.pkl', 'rb'))
-    tokenizer = pickle.load(open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'rb'))
+    train_captions = pickle.load(open('../models/train_captions.pkl', 'rb'))
+    tokenizer = pickle.load(open('../models/tokenizer.pkl', 'rb'))
 
     vocab_size = len(tokenizer.word_index) + 1
     encoder = CNN_Encoder(embedding_dim)
     decoder = RNN_Decoder(embedding_dim, units, vocab_size)
     optimizer = tf.keras.optimizers.Adam()
 
-    checkpoint_path = "/home/mmlab/image_captioning/models/checkpoints"
+    checkpoint_path = "../models/checkpoints"
     ckpt = tf.train.Checkpoint(encoder=encoder,
                             decoder=decoder,
                             optimizer = optimizer)
@@ -93,17 +93,21 @@ if __name__ == "__main__":
 
     '''
     ## captions on an image
-    image_path = '/content/drive/My Drive/XLA_UD/abc.jpg'
+    image_path = 'abc.jpg'
     result, attention_plot = generate_desc(image_path, tokenizer, encoder, decoder)
     print ('Prediction Caption:', ' '.join(result))
     plot_attention(image_path, result, attention_plot)
     # opening the image
-    Image.open(image_path)
+    #Image.open(image_path)
+    img = cv2.imread(image_path)
+    cv2.imshow("Input Image", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows() 
     '''
 
     # captions on the test set
-    img_names_test = pickle.load(open('/home/mmlab/image_captioning/models/img_names_test.pkl', 'rb'))
-    captions_test = pickle.load(open('/home/mmlab/image_captioning/models/captions_test.pkl', 'rb'))
+    img_names_test = pickle.load(open('../models/img_names_test.pkl', 'rb'))
+    captions_test = pickle.load(open('../models/captions_test.pkl', 'rb'))
 
     rid = np.random.randint(0, len(img_names_test))
     image = img_names_test[rid]
@@ -114,4 +118,8 @@ if __name__ == "__main__":
     print ('Prediction Caption:', ' '.join(result))
     plot_attention(image, result, attention_plot)
     # opening the image
-    Image.open(img_names_test[rid])
+    #Image.open(img_names_test[rid])
+    img = cv2.imread(image)
+    cv2.imshow("Input Image", img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows() 

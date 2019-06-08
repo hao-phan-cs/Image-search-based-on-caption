@@ -34,8 +34,8 @@ def data_split(img_name_vector, train_captions, tokenizer):
     # Save img_name_val, cap_val to disk for testing
     #pickle.dump(img_name_val, open('/content/drive/My Drive/XLA_UD/models/img_names_test.pkl', 'wb'))
     #pickle.dump(cap_val, open('/content/drive/My Drive/XLA_UD/models/captions_test.pkl', 'wb'))
-    pickle.dump(img_name_val, open('/home/mmlab/image_captioning/models/img_names_test.pkl', 'wb'))
-    pickle.dump(cap_val, open('/home/mmlab/image_captioning/models/captions_test.pkl', 'wb'))
+    pickle.dump(img_name_val, open('../models/img_names_test.pkl', 'wb'))
+    pickle.dump(cap_val, open('../models/captions_test.pkl', 'wb'))
 
     return img_name_train, img_name_val, cap_train, cap_val
 
@@ -49,7 +49,7 @@ def data_generator(img_name_train, cap_train):
             num_parallel_calls=tf.data.experimental.AUTOTUNE)
 
     # Shuffle and batch
-    dataset = dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE)
+    dataset = dataset.shuffle(BUFFER_SIZE).batch(BATCH_SIZE, drop_remainder=True)
     dataset = dataset.prefetch(buffer_size=tf.data.experimental.AUTOTUNE)
 
     return dataset
@@ -88,24 +88,21 @@ def train_step(decoder, encoder, optimizer, tokenizer, img_tensor, target):
 
 def train_model(EPOCHS = 20):
     # load captions and images for training
-    #train_captions = pickle.load(open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'rb'))
-    #img_name_vector = pickle.load(open('/content/drive/My Drive/XLA_UD/models/img_name_vector.pkl', 'rb'))
-    #tokenizer = pickle.load(open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'rb'))
-    train_captions = pickle.load(open('/home/mmlab/image_captioning/models/train_captions.pkl', 'rb'))
-    img_name_vector = pickle.load(open('/home/mmlab/image_captioning/models/img_name_vector.pkl', 'rb'))
-    tokenizer = pickle.load(open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'rb'))
+    train_captions = pickle.load(open('../models/train_captions.pkl', 'rb'))
+    img_name_vector = pickle.load(open('../models/img_name_vector.pkl', 'rb'))
+    tokenizer = pickle.load(open('../models/tokenizer.pkl', 'rb'))
+
+    img_name_train, img_name_val, cap_train, cap_val = data_split(img_name_vector, train_captions, tokenizer)
 
     vocab_size = len(tokenizer.word_index) + 1
-    num_steps = len(img_name_vector) // BATCH_SIZE
+    num_steps = len(img_name_train) // BATCH_SIZE
 
     encoder = CNN_Encoder(embedding_dim)
     decoder = RNN_Decoder(embedding_dim, units, vocab_size)
 
     optimizer = tf.keras.optimizers.Adam()
 
-    #checkpoint_path = "./checkpoints/train"
-    #checkpoint_path = "/content/drive/My Drive/XLA_UD/models/checkpoints"
-    checkpoint_path = "/home/mmlab/image_captioning/models/checkpoints"
+    checkpoint_path = "../models/checkpoints"
     ckpt = tf.train.Checkpoint(encoder=encoder,
                             decoder=decoder,
                             optimizer = optimizer)
@@ -117,7 +114,6 @@ def train_model(EPOCHS = 20):
     
     loss_plot = []
 
-    img_name_train, img_name_val, cap_train, cap_val = data_split(img_name_vector, train_captions, tokenizer)
     dataset = data_generator(img_name_train, cap_train)
 
     for epoch in range(start_epoch, EPOCHS):
@@ -128,7 +124,7 @@ def train_model(EPOCHS = 20):
             batch_loss, t_loss = train_step(decoder, encoder, optimizer, tokenizer, img_tensor, target)
             total_loss += t_loss
 
-            if batch % 100 == 0:
+            if batch % 200 == 0:
                 print ('Epoch {} Batch {} Loss {:.4f}'.format(
                     epoch + 1, batch, batch_loss.numpy() / int(target.shape[1])))
         # storing the epoch end loss value to plot later
@@ -148,4 +144,4 @@ def train_model(EPOCHS = 20):
     plt.show()
 
 if __name__ == "__main__":
-    train_model(EPOCHS=20)
+    train_model(EPOCHS=31)

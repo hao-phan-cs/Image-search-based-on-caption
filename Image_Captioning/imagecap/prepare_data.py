@@ -7,7 +7,6 @@ from tqdm import tqdm
 import re
 import numpy as np
 import json
-from PIL import Image
 import pickle
 
 def create_dataset(annotation_file, image_dir):
@@ -33,8 +32,8 @@ def create_dataset(annotation_file, image_dir):
                                             all_img_name_vector,
                                             random_state=1)
 
-    # Select the first 30000 captions from the shuffled set
-    num_examples = 30000
+    # Select the first 90000 captions from the shuffled set
+    num_examples = 90000
     train_captions = train_captions[:num_examples]
     img_name_vector = img_name_vector[:num_examples]
 
@@ -76,8 +75,8 @@ def extract_features(img_name_vector):
 
 
 def create_tokenizer(train_captions):
-    # Choose the top 5000 words from the vocabulary
-    top_k = 5000
+    # Choose the top 10000 words from the vocabulary
+    top_k = 10000
     tokenizer = tf.keras.preprocessing.text.Tokenizer(num_words=top_k,
                                                     oov_token="<unk>",
                                                     filters='!"#$%&()*+.,-/:;=?@[\]^_`{|}~ ')
@@ -89,19 +88,15 @@ def create_tokenizer(train_captions):
     return tokenizer
 
 if __name__ == "__main__":
-    #annotation_file = '/content/drive/My Drive/XLA_UD/annotations/captions_train2014.json'
-    annotation_file = '/home/mmlab/image_captioning/annotations/captions_train2014.json'
-    #image_dir = '/content/drive/My Drive/XLA_UD/mscoco2014/'
-    image_dir = '/home/mmlab/image_captioning/mscoco2014/'
+    annotation_file = '../annotations/captions_train2014.json'
+    image_dir = '../mscoco2014/'
     train_captions, img_name_vector = create_dataset(annotation_file, image_dir)
-    #pickle.dump(train_captions, open('/content/drive/My Drive/XLA_UD/models/train_captions.pkl', 'wb'))
-    #pickle.dump(img_name_vector, open('/content/drive/My Drive/XLA_UD/models/img_name_vector.pkl', 'wb'))
-    pickle.dump(train_captions, open('/home/mmlab/image_captioning/models/train_captions.pkl', 'wb'))
-    pickle.dump(img_name_vector, open('/home/mmlab/image_captioning/models/img_name_vector.pkl', 'wb'))
+    
+    pickle.dump(train_captions, open('../models/train_captions.pkl', 'wb'))
+    pickle.dump(img_name_vector, open('../models/img_name_vector.pkl', 'wb'))
 
     tokenizer = create_tokenizer(train_captions)
-    #pickle.dump(tokenizer, open('/content/drive/My Drive/XLA_UD/models/tokenizer.pkl', 'wb'))
-    pickle.dump(tokenizer, open('/home/mmlab/image_captioning/models/tokenizer.pkl', 'wb'))
+    pickle.dump(tokenizer, open('../models/tokenizer.pkl', 'wb'))
     # extract and save features
     extract_features(img_name_vector)
     #
