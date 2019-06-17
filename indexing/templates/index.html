@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web App</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{{ url_for('static',filename='img/logo.png')}}" type="image/x-icon">
+    <!-- MY STYLE -->
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css')}}">
+	<link rel="stylesheet" href="{{ url_for('static',filename='js/uploadfile.js')}}">
+</head>
+
+<body class="bg-dark">
+
+    <!--BEGIN NAVBAR-->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand"></a>
+        </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-2">
+                <h1 class="text-center pb-3 font-weight-bold text-white "
+                    style="font-family : Arial; font-size: xx-large">IMAGE SEARCH ENGINE BASED ON CAPTION</h1>
+                <form id="form" method="POST" action="#" enctype="multipart/form-data">
+                    <!-- COMPONENT START -->
+                    <section class="search-banner text-white py-3 form-arka-plan" id="search-banner">
+                        <div class="container py-3 my-3">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="card acik-renk-form"
+                                        style="margin-left: 224px;border-radius: 100px;height:62px;width: 634px;">
+                                        <div class="card-body" style="padding-left: 115px;padding-top:70px;">
+                                            <div class="row" style="margin: -59px;
+                                            margin-left: -104px;">
+                                                <div class="col-md-8">
+                                                    <div class="form-group upload_file_container ">
+                                                        <input name="caption" type="text" class="form-control"
+                                                            style="margin-top: -3px;;font-size:20px;width: 450px;font-style: italic;border-style: hidden;font-weight: bold"
+                                                            placeholder="Type a caption here ...">
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label for="files" class="btn btn-info fa fa-camera fa-lg" value="" 
+                                                        style="margin-left: 477px;margin-top:-91px;margin-right: 5px;padding-top: 10px;height:39px;vertical-align: middle;"></label>
+                                                    <button type="submit"
+                                                        class="btn btn-danger font-weight-bold fa fa-search text-center fa-lg"
+                                                        style="margin-top: -91px;height:39px;width:50px;padding-top:3px;margin-bottom: 8px;vertical-align: middle">
+                                                    </button>
+                                                    <input type="file" class="form-control" id="files" name="file" onchange="form.submit()"
+                                                        style="visibility:hidden;" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            </section>
+            </form>
+			<form id="form" method="POST" action="#" enctype="multipart/form-data">
+				
+			</form>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- ẢNH ĐÃ TẢI LÊN -->
+    <section id="smartphone" class="container-fluid pb-5">
+        <h1 class="text-white pb-3" style="font-size: larger">Image Upload:</h1>
+        {% if anhupload %}
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-3">
+                    <div class="container">
+                        <div class="card bg-light" style="width:300px">
+                            <img class="card-img-top" src="{{url_for('static',filename='Uploads/' + anhupload)}}" alt="Card image"
+                                style="max-width:100%; height: 250px;" ;>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<p class="text-white text-center" style="border: 3px solid #0078f0;width: 860px;float: right;margin-top: -167px;margin-right: 135px;font-size: 25px;">{{caption_query}} 
+			</p>
+        {% endif %}
+		
+		{% if caption %}
+			<div class="card" style="width: 655px;margin-left: 418px;">
+				<div class="card-body">
+					<h4 class="card-title text-center font-weight-bold">{{caption}}</h4>
+				</div>
+			</div>
+        {% endif %}
+        
+    </section>
+    <!-- END ẢNH TẢI LÊN -->
+
+    <hr class="bg-light mt-5">
+
+    <!-- BEGIN RESULTS -->
+    <section id="laptop" class="container-fluid pt-3 pb-5">
+        <h1 class="pb-3 text-white" style="font-size: larger">Results:</h1>
+			<div class="row">
+				{% for arr in array  %}
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-3 mb-4">
+					
+					<div class="container">
+						<div class="card bg-light" style="width:300px">
+							<img class="card-img-top" src="{{url_for('static',filename='img/' + arr)}}" alt="Card image"
+								style="max-width:100%; height: 250px;">
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+        
+		
+    </section>
+	
+	<hr class="bg-light mt-5">
+
+	<!-- Footer -->
+	<div class="container ">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2">
+					<ul class="list-unstyled list-inline social text-center">
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-facebook"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-twitter"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-instagram"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();"><i class="fa fa-google-plus"></i></a></li>
+						<li class="list-inline-item"><a href="javascript:void();" target="_blank"><i class="fa fa-envelope"></i></a></li>
+					</ul>
+				</div>
+				</hr>
+			</div>	
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+					<p class="h6">&copy All right Reversed.<a class="text-green ml-2" href="https://www.google.com" target="_blank">Image Retrieval 2019</a></p>
+				</div>
+				</hr>
+			</div>	
+		</div>
+	<!-- ./Footer -->
+    <!-- END RESULT -->
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
