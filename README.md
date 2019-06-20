@@ -3,7 +3,7 @@ Image search engine based on image's caption
 
 ## Getting Started
 
-### Prerequisites
+### Install
 ```
 pip install numpy
 ```
