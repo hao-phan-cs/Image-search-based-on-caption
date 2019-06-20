@@ -1,9 +1,8 @@
-# Image-search-based-on-caption
-Image search engine based on image's caption
+# IMAGE SEARCH ENGINE BASED ON CAPTION
+- Đồ án môn học: Xử lý ảnh và ứng dụng (HK2 2018-2019)
+- Tên đề tài: Xây dựng hệ thống tìm kiếm ảnh sử dụng mô tả ( IMAGE SEARCH ENGINE BASED ON CAPTION )
 
-## Getting Started
-
-### Install
+## Cài đặt các thư viện cần thiết
 ```
 pip install numpy
 ```
@@ -35,10 +34,72 @@ pip install Flask
 ```
 pip install mysql-connector-python
 ```
+## Bài toán image captioning
+- Training một model có khả năng tạo ra câu mô tả cho hình ảnh đầu vào
+
+### Download the MS-COCO dataset
+- annotations: http://images.cocodataset.org/annotations/annotations_trainval2014.zip 
+- images: http://images.cocodataset.org/zips/train2014.zip
+
+### Mô tả các thư mục
+- annotations: Chứa các file .json được giải nén từ tập tin annotations_trainval2014.zip
+- mscoco2014: Chứa các hình ảnh được giải nén từ tập tin train2014.zip
+- features_incepv3: Chứa các features của các hình ảnh dùng cho việc training model
+- models: Chứa các dữ liệu được tạo ra khi chạy các file scripts
+- models/checkpoints: Chứa các Checkpoints lưu các parameters của model
+
+### Mô tả các scripts
+- prepare_data.py: Chuẩn bị dữ liệu cho training 
+```
+run: python prepare_data.py
+```
+
+- generate_model.py: Định nghĩa kiến trúc model
+
+- train_model.py: Training model 
+```
+run: python train_model.py
+```
+
+- eval_model.py: Đánh giá skill model 
+```
+run: python eval_model.py
+```
+
+- gen_caption.py: Sử dụng model để mô tả một ảnh 
+```
+run: python gen_caption.py
+```
+
+## Bài toán truy vấn ảnh
+- Sử dụng mô hình Vector Space Model để lập chỉ mục truy vấn hình ảnh
+### Mô tả các scripts:
+-	sql_statement.py: chứa các hàm khởi tạo cơ sở dữ liệu
+```
+run: python sql_statement.py
+```
+
+-	preprocess_data.py: tiền xử lý dữ liệu
+
+-	indexing.py: đánh chỉ mục trên MySQL
+```
+run: python indexing.py
+```
+
+-	run_query.py: thực hiện truy vấn trên cấu trúc chỉ mục
+```
+run: python run_query.py
+```
 
 ## Running the tests
 
-- Truy cập đường link sau để sử dụng:
+- Chạy trên local:
+```
+run: python main.py
+Mở browser và truy cập địa chỉ: http://localhost:5000
+```
+
+- Hoặc truy cập đường link sau để sử dụng:
 ```
 http://35.232.224.165
 ```
