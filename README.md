@@ -5,35 +5,18 @@
 ## Cài đặt các thư viện cần thiết
 ```
 pip install numpy
-```
-```
 pip install opencv-contrib-python
-```
-```
 pip install scipy matplotlib pillow
-```
-```
 pip install imutils h5py requests progressbar2
-```
-```
 pip install scikit-learn scikit-image
-```
-```
 pip install tensorflow==2.0.0-alpha0
-```
-```
 pip install tqdm
-```
-```
 pip install spacy
 python -m spacy download en_core_web_sm
-```
-```
 pip install Flask
-```
-```
 pip install mysql-connector-python
 ```
+
 ## Bài toán image captioning
 - Training một model có khả năng tạo ra câu mô tả cho hình ảnh đầu vào
 
