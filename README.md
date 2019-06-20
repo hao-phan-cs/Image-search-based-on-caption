@@ -1,6 +1,13 @@
-# IMAGE SEARCH ENGINE BASED ON CAPTION
+# Image Search Engine Based On Caption
 - Đồ án môn học: Xử lý ảnh và ứng dụng (HK2 2018-2019)
-- Tên đề tài: Xây dựng hệ thống tìm kiếm ảnh sử dụng mô tả ( IMAGE SEARCH ENGINE BASED ON CAPTION )
+- Tên đề tài: Xây dựng hệ thống tìm kiếm ảnh sử dụng mô tả ( Image search engine based on caption )
+  + Input: Một câu mô tả ảnh hoặc một hình ảnh
+  + Output: Các hình ảnh liên quan với câu mô tả
+  
+## Ngôn ngữ sử dụng
+- python 3
+- Thư viện Tensorflow
+- Thư viện Flask
 
 ## Cài đặt các thư viện cần thiết
 ```
