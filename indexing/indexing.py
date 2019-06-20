@@ -14,7 +14,7 @@ def load_collection_and_store_data(annotation_file, name_db):
         annotations = json.load(f)
     collection = defaultdict(list)
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         # db.autocommit = True
         cursor = db.cursor()
         idf_counter = Counter()

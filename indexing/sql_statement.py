@@ -5,7 +5,7 @@ from mysql.connector import Error
 
 def create_new_db(name_db):
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234')
+        db = mysql.connect(host='localhost', user='root', passwd='0000')
         cursor = db.cursor()
         cursor.execute("DROP DATABASE IF EXISTS "+name_db)
         cursor.execute("CREATE DATABASE " + name_db)
@@ -18,7 +18,7 @@ def create_new_db(name_db):
 
 def create_table_raw_caption(name_db):
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         cursor = db.cursor()
         cursor.execute("DROP TABLE IF EXISTS raw_caption")
         query = "CREATE TABLE raw_caption (caption_id int primary key, image_id int, caption varchar(255), norm double)"
@@ -32,7 +32,7 @@ def create_table_raw_caption(name_db):
 
 def create_table_dictionary(name_db):
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         cursor = db.cursor()
         cursor.execute("DROP TABLE IF EXISTS dictionary")
         query = "CREATE TABLE dictionary (term varchar(255) primary key, num_of_cap int, idf double)"
@@ -46,7 +46,7 @@ def create_table_dictionary(name_db):
             
 def create_table_posting_list(name_db):   
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         cursor = db.cursor()
         cursor.execute("DROP TABLE IF EXISTS posting_list")
         query = "CREATE TABLE posting_list (term varchar(255), caption_id int, tf int, weight double, constraint PK_PL primary key (term, caption_id))"
@@ -60,7 +60,7 @@ def create_table_posting_list(name_db):
 
 def update_weight(name_db):
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         cursor = db.cursor()
         # calculate tf.idf
         query =  '''UPDATE posting_list as pt, dictionary as d

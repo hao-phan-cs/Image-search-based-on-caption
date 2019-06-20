@@ -1,4 +1,4 @@
-import preprocess_data
+import indexing.preprocess_data
 import operator
 from collections import defaultdict
 import mysql.connector as mysql
@@ -6,10 +6,10 @@ from mysql.connector import Error
 import os
 
 def compute_relevant_score(input_string, name_db, top_k):
-    words = preprocess_data.generate_term(input_string)
+    words = indexing.preprocess_data.generate_term(input_string)
     relevant_caps = defaultdict(float)
     try:
-        db = mysql.connect(host='localhost', user='root', passwd='1234', database=name_db)
+        db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
         cursor = db.cursor()
         for word in set(words):
             query = 'SELECT caption_id, weight FROM posting_list WHERE term=\"{}\"'.format(word)

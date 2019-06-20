@@ -1,0 +1,280 @@
+.loader {
+    bottom: 0;
+    height: 175px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 100px;
+    width: 175px;
+}
+
+.loader .dot {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 87.5px;
+}
+.loader .dot::before {
+    border-radius: 100%;
+    content: "";
+    height: 87.5px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transform: scale(0);
+    width: 87.5px;
+}
+.loader .dot:nth-child(7n+1) {
+    transform: rotate(45deg);
+}
+.loader .dot:nth-child(7n+1)::before {
+    animation: 0.8s linear 0.1s normal none infinite running load;
+    background: #00ff80 none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+2) {
+    transform: rotate(90deg);
+}
+.loader .dot:nth-child(7n+2)::before {
+    animation: 0.8s linear 0.2s normal none infinite running load;
+    background: #00ffea none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+3) {
+    transform: rotate(135deg);
+}
+.loader .dot:nth-child(7n+3)::before {
+    animation: 0.8s linear 0.3s normal none infinite running load;
+    background: #00aaff none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+4) {
+    transform: rotate(180deg);
+}
+.loader .dot:nth-child(7n+4)::before {
+    animation: 0.8s linear 0.4s normal none infinite running load;
+    background: #0040ff none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+5) {
+    transform: rotate(225deg);
+}
+.loader .dot:nth-child(7n+5)::before {
+    animation: 0.8s linear 0.5s normal none infinite running load;
+    background: #2a00ff none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+6) {
+    transform: rotate(270deg);
+}
+.loader .dot:nth-child(7n+6)::before {
+    animation: 0.8s linear 0.6s normal none infinite running load;
+    background: #9500ff none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+7) {
+    transform: rotate(315deg);
+}
+.loader .dot:nth-child(7n+7)::before {
+    animation: 0.8s linear 0.7s normal none infinite running load;
+    background: magenta none repeat scroll 0 0;
+}
+.loader .dot:nth-child(7n+8) {
+    transform: rotate(360deg);
+}
+.loader .dot:nth-child(7n+8)::before {
+    animation: 0.8s linear 0.8s normal none infinite running load;
+    background: #ff0095 none repeat scroll 0 0;
+}
+
+@keyframes load {
+100% {
+    opacity: 0;
+    transform: scale(1);
+}
+}
+@keyframes load {
+100% {
+    opacity: 0;
+    transform: scale(1);
+}
+}
+
+
+/*Thats all. I hope you enjoyed it.
+Thanks :)*/
+/***************************************************************/
+/*************** Footer Bar Style ******************************/
+/***************************************************************/
+.footer-bar
+{
+    display: block;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background: #111;
+    border-top: 1px solid #E62600;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+.footer-bar .article-wrapper{
+    font-family: arial, sans-serif;
+    font-size: 14px;
+    color: #888;
+    float: left;
+    margin-left: 10%;
+}
+.footer-bar .article-link a, .footer-bar .article-link a:visited{
+    text-decoration: none;
+    color: #fff;
+}
+.site-link a, .site-link a:visited{
+    color: #888;
+    font-size: 14px;
+    font-family: arial, sans-serif;
+    float: right;
+    margin-right: 10%;
+    text-decoration: none;
+}
+.site-link a:hover{
+    color: #E62600;
+}
+
+@keyframes load {
+100% {
+    opacity: 0;
+    transform: scale(1);
+}
+}
+@keyframes load {
+100% {
+    opacity: 0;
+    transform: scale(1);
+}
+}
+
+@font-face {
+  font-family: "open";
+  font-style: normal;
+  font-weight: 300;
+  src: local("Open Sans Light"), local("OpenSans-Light"), url(https://themes.googleusercontent.com/static/fonts/opensans/v6/DXI1ORHCpsQm3Vp6mXoaTZ1r3JsPcQLi8jytr04NNhU.woff) format('woff');
+}
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+h1 {
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  text-decoration: none;
+  color: inherit;
+}
+
+@keyframes linear {
+  
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 200px 0;
+  }
+  
+}
+
+@keyframes radial {
+  
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 60px;
+  }
+  
+}
+
+@keyframes repeating {
+  
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 85px;
+  }
+  
+}
+
+@keyframes electronic {
+  
+  0%, 100% {
+    background-position: 20px -30px;
+  }
+  25% {
+    background-position: 150px 5px;
+  }
+  50% {
+    background-position: 20px 40px;
+  }
+  75% {
+    background-position: -100px 5px;
+  }
+  
+}
+
+.biliboard {
+  width: 200px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  background:#111111;
+  color: #EEEEEE  ;
+  font: 13px open, tahoma;
+}
+.biliboard:before {
+  content: '';
+  display: block;
+  height: 100%;
+  width: 637px;
+  border-radius: 12px;
+  transform: scale( 1.02, 1.08 );
+  position: absolute;
+  background: #f00;
+  background: linear-gradient( 90deg, #02fcfc, #fafafa, #02fcfc, #00FF99, #02fcfc );
+  background-position: 55px 0;
+  top: 0;
+  animation: linear 5s infinite linear;
+  left: 3px;
+  z-index: -1;
+}
+
+.biliboard.radial:before {
+  background: radial-gradient( #fafafa, #fafafa, #F2A61A, #fafafa, #fafafa );
+  animation: radial 5s infinite linear;
+}
+
+.biliboard.repeating:before {
+  border-radius:12px
+  background: repeating-linear-gradient( -45deg, #fafafa, #fafafa 30px, #5FC914 30px, #5FC914 60px ) fixed;
+  animation: repeating 5s infinite linear;
+}
+
+.biliboard.electronic:before {
+  background: radial-gradient( #EA238D, #EA238D, #EA238D, #EA238D, #fafafa, #fafafa ) no-repeat;
+  background-size: 150px 50px;
+  animation: electronic 5s infinite linear;
+}
+
+
+
+
