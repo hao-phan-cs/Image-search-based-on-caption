@@ -4,13 +4,37 @@ Image search engine based on image's caption
 ## Getting Started
 
 ### Prerequisites
+```
 pip install numpy
+```
+```
 pip install opencv-contrib-python
+```
+```
 pip install scipy matplotlib pillow
+```
+```
 pip install imutils h5py requests progressbar2
+```
+```
 pip install scikit-learn scikit-image
+```
+```
 pip install tensorflow==2.0.0-alpha0
+```
+```
 pip install tqdm
+```
+```
+pip install spacy
+python -m spacy download en_core_web_sm
+```
+```
+pip install Flask
+```
+```
+pip install mysql-connector-python
+```
 
 ## Running the tests
 - Chạy hệ thống tìm kiếm ảnh trên local:
