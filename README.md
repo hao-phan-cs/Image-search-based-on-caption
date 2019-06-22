@@ -85,8 +85,10 @@ run: python run_query.py
 
 - Chạy trên local:
 ```
-run: python main.py
-Mở browser và truy cập địa chỉ: http://localhost:5000
+1. Tạo database MySQL trên máy local bằng cách thực thi file ir_system3.sql trong thư mục indexing:
+  - Click chuột phải vào file ir_system3.sql ==> Open with ==> MySQL WorkBench ==> Chọn Run SQL Scripts...
+2. run: python main.py
+3. Mở browser và truy cập địa chỉ: http://localhost:5000
 ```
 
 - Hoặc truy cập đường link sau để sử dụng:
