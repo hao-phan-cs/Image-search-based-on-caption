@@ -45,6 +45,9 @@ run: python prepare_data.py
 ```
 
 - generate_model.py: Định nghĩa kiến trúc model
+```
+run: python generate_model.py
+```
 
 - train_model.py: Training model 
 ```
@@ -70,6 +73,9 @@ run: python sql_statement.py
 ```
 
 -	preprocess_data.py: tiền xử lý dữ liệu
+```
+run: python preprocess_data.py
+```
 
 -	indexing.py: đánh chỉ mục trên MySQL
 ```
