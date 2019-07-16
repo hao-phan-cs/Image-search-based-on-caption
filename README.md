@@ -11,17 +11,17 @@
 
 ## Cài đặt các thư viện cần thiết
 ```
-pip install numpy
-pip install opencv-contrib-python
-pip install scipy matplotlib pillow
-pip install imutils h5py requests progressbar2
-pip install scikit-learn scikit-image
-pip install tensorflow==2.0.0-alpha0
-pip install tqdm
-pip install spacy
+pip3 install numpy
+pip3 install opencv-contrib-python
+pip3 install scipy matplotlib pillow
+pip3 install imutils h5py requests progressbar2
+pip3 install scikit-learn scikit-image
+pip3 install tensorflow==2.0.0-alpha0
+pip3 install tqdm
+pip3 install spacy
 python -m spacy download en_core_web_sm
-pip install Flask
-pip install mysql-connector-python
+pip3 install Flask
+pip3 install mysql-connector-python
 ```
 
 ## Bài toán image captioning
