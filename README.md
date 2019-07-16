@@ -22,6 +22,7 @@ pip3 install spacy
 python -m spacy download en_core_web_sm
 pip3 install Flask
 pip3 install mysql-connector-python
+pip3 install gdown
 ```
 
 ## Bài toán image captioning
@@ -41,24 +42,24 @@ pip3 install mysql-connector-python
 ### Mô tả các scripts
 - prepare_data.py: Chuẩn bị dữ liệu cho training 
 ```
-run: python prepare_data.py
+$ python prepare_data.py
 ```
 
 - generate_model.py: Định nghĩa kiến trúc model
 
 - train_model.py: Training model 
 ```
-run: python train_model.py
+$ python train_model.py
 ```
 
 - eval_model.py: Đánh giá skill model 
 ```
-run: python eval_model.py
+$ python eval_model.py
 ```
 
 - gen_caption.py: Sử dụng model để mô tả một ảnh 
 ```
-run: python gen_caption.py
+$ python gen_caption.py
 ```
 
 ## Bài toán truy vấn ảnh
@@ -66,30 +67,39 @@ run: python gen_caption.py
 ### Mô tả các scripts:
 -	sql_statement.py: chứa các hàm khởi tạo cơ sở dữ liệu
 ```
-run: python sql_statement.py
+$ python sql_statement.py
 ```
 
 -	preprocess_data.py: tiền xử lý dữ liệu
 
 -	indexing.py: đánh chỉ mục trên MySQL
 ```
-run: python indexing.py
+$ python indexing.py
 ```
 
 -	run_query.py: thực hiện truy vấn trên cấu trúc chỉ mục
 ```
-run: python run_query.py
+$ python run_query.py
 ```
 
 ## Running the tests
-
-- Download file ir_system3 vào thư mục indexing https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
-- Chạy trên local:
+### Tạo database MySQL trên máy local:
+- Vào thư mục indexing
+- Download file ir_system3: https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
+- Setting cho database:
 ```
-1. Tạo database MySQL trên máy local bằng cách thực thi file ir_system3.sql trong thư mục indexing:
-  - Click chuột phải vào file ir_system3.sql ==> Open with ==> MySQL WorkBench ==> Chọn Run SQL Scripts...
-2. run: python main.py
-3. Mở browser và truy cập địa chỉ: http://localhost:5000
+$ mysql_secure_installation
+```
+- Mở MySQL server với file ir_system3:
+```
+$ mysql -h localhost -u root -p < ir_system3.sql \
+```
+- Chạy các scripts trong phần Bài toán truy vấn ảnh
+- Khởi động server flask:
+```
+$ python main.py
+```
+- Mở browser và truy cập địa chỉ: http://localhost:5000
 ```
 
 - Hoặc truy cập đường link sau để sử dụng:
@@ -100,3 +110,4 @@ http://192.168.28.11:5000
 
 * **Hoàng Đức Lương** - *15520462*
 * **Phạm Vũ Hùng** - *15520279*
+* **Forked Edition by Phan Phú Hào
