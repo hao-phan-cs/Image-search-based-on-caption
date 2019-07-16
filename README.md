@@ -77,7 +77,7 @@ $ python gen_caption.py
 ``` 
 $ gdown https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
 ```
-- Setting cho database:
+- Setup MySQL server:
 ```
 $ mysql_secure_installation
 ```
