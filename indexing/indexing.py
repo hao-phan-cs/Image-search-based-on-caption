@@ -49,7 +49,7 @@ def image_path(image_id, image_dir):
     return image_dir + 'COCO_train2014_' + '%012d.jpg' % (image_id)
 
 if __name__ == "__main__":
-    annotation_file = '../annotations/captions_train2014.json'
+    annotation_file = '../Image_Captioning/annotations/captions_train2014.json'
     image_dir = '../mscoco2014/'
     sql_statement.init_database('ir_system3')
     collection = load_collection_and_store_data(annotation_file, 'ir_system3')

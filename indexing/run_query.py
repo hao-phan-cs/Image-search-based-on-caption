@@ -1,4 +1,4 @@
-import indexing.preprocess_data
+from indexing import preprocess_data
 import operator
 from collections import defaultdict
 import mysql.connector as mysql
@@ -6,7 +6,7 @@ from mysql.connector import Error
 import os
 
 def compute_relevant_score(input_string, name_db, top_k):
-    words = indexing.preprocess_data.generate_term(input_string)
+    words = preprocess_data.generate_term(input_string)
     relevant_caps = defaultdict(float)
     try:
         db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)

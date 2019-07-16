@@ -1,0 +1,5 @@
+/Image_Captioning/annotations/
+/Image_Captioning/mscoco2014/
+/Image_Captioning/features_incepv3/
+/Image_Captioning/models/checkpoints/
+/indexing/ir_system3.sql

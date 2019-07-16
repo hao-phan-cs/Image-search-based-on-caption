@@ -102,6 +102,6 @@ if __name__ == "__main__":
     ckpt = tf.train.Checkpoint(encoder=encoder,
                             decoder=decoder,
                             optimizer = optimizer)
-    ckpt.restore("../models/checkpoints/ckpt-6")
+    ckpt.restore("../models/checkpoints/ckpt-4")
 
     evaluate_model(encoder, decoder, tokenizer)

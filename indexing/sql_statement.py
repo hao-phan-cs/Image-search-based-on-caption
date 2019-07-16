@@ -1,8 +1,6 @@
 import mysql.connector as mysql
 from mysql.connector import Error
 
-
-
 def create_new_db(name_db):
     try:
         db = mysql.connect(host='localhost', user='root', passwd='0000')
@@ -10,12 +8,11 @@ def create_new_db(name_db):
         cursor.execute("DROP DATABASE IF EXISTS "+name_db)
         cursor.execute("CREATE DATABASE " + name_db)
         print("Successfully create database "+name_db)
-    except Error as e:
-        print("Error while connecting to MySQL ", e)
-    finally:
         if db.is_connected():
             db.close()
-
+    except Error as e:
+        print("Error while connecting to MySQL ", e)
+        
 def create_table_raw_caption(name_db):
     try:
         db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
@@ -24,11 +21,10 @@ def create_table_raw_caption(name_db):
         query = "CREATE TABLE raw_caption (caption_id int primary key, image_id int, caption varchar(255), norm double)"
         cursor.execute(query)
         print("Successfully create table raw_caption")
-    except Error as e:
-        print("Error while connecting to MySQL ", e)
-    finally:
         if db.is_connected():
             db.close()
+    except Error as e:
+        print("Error while connecting to MySQL ", e)
 
 def create_table_dictionary(name_db):
     try:
@@ -38,11 +34,10 @@ def create_table_dictionary(name_db):
         query = "CREATE TABLE dictionary (term varchar(255) primary key, num_of_cap int, idf double)"
         cursor.execute(query)
         print("Successfully create table dictionary")
-    except Error as e:
-        print("Error while connecting to MySQL ", e)
-    finally:
         if db.is_connected():
             db.close()
+    except Error as e:
+        print("Error while connecting to MySQL ", e)
             
 def create_table_posting_list(name_db):   
     try:
@@ -52,12 +47,11 @@ def create_table_posting_list(name_db):
         query = "CREATE TABLE posting_list (term varchar(255), caption_id int, tf int, weight double, constraint PK_PL primary key (term, caption_id))"
         cursor.execute(query)
         print("Successfully create table posting_list")
-    except Error as e:
-        print("Error while connecting to MySQL ", e)
-    finally:
         if db.is_connected():
             db.close()
-
+    except Error as e:
+        print("Error while connecting to MySQL ", e)
+        
 def update_weight(name_db):
     try:
         db = mysql.connect(host='localhost', user='root', passwd='0000', database=name_db)
@@ -82,12 +76,11 @@ def update_weight(name_db):
                     WHERE pt.caption_id = rc.caption_id'''
         cursor.execute(query) #576.938s
         db.commit()
-    except Error as e:
-        print("Error while connecting to MySQL ", e)
-    finally:
         if db.is_connected():
             db.close()
-
+    except Error as e:
+        print("Error while connecting to MySQL ", e)
+        
 def init_database(name_db):
     create_new_db(name_db)
     create_table_raw_caption(name_db)

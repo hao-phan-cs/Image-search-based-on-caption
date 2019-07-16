@@ -92,7 +92,7 @@ def return_caption(image_path):
     decoder = RNN_Decoder(embedding_dim, units, vocab_size)
     optimizer = tf.keras.optimizers.Adam()
 
-    checkpoint_path = "Image_Captioning/models/checkpoints/ckpt-6"
+    checkpoint_path = "Image_Captioning/models/checkpoints/ckpt-4"
     ckpt = tf.train.Checkpoint(encoder=encoder,
                             decoder=decoder,
                             optimizer = optimizer)

@@ -35,4 +35,4 @@ def upload():
 				return render_template('index.html', array = list_img,anhupload=f_name,caption_query = caption_query)
 			
 if __name__ == "__main__":
-	app.run()
+	app.run(host='0.0.0.0')
