@@ -66,48 +66,44 @@ $ python gen_caption.py
 - Sử dụng mô hình Vector Space Model để lập chỉ mục truy vấn hình ảnh
 ### Mô tả các scripts:
 -	sql_statement.py: chứa các hàm khởi tạo cơ sở dữ liệu
-```
-$ python sql_statement.py
-```
-
 -	preprocess_data.py: tiền xử lý dữ liệu
-
 -	indexing.py: đánh chỉ mục trên MySQL
-```
-$ python indexing.py
-```
-
 -	run_query.py: thực hiện truy vấn trên cấu trúc chỉ mục
-```
-$ python run_query.py
-```
 
 ## Running the tests
 ### Tạo database MySQL trên máy local:
 - Vào thư mục indexing
-- Download file ir_system3: https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
+- Download file ir_system3
+``` 
+$ gdown https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
+```
 - Setting cho database:
 ```
 $ mysql_secure_installation
+```
+- Đặt password cho root@localhost:
+```
+$ mysql -u root
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
 ```
 - Mở MySQL server với file ir_system3:
 ```
 $ mysql -h localhost -u root -p < ir_system3.sql \
 ```
-- Chạy các scripts trong phần Bài toán truy vấn ảnh
+- Chạy các scripts:
+```
+$ python sql_statement.py
+$ python indexing.py
+```
 - Khởi động server flask:
 ```
 $ python main.py
 ```
 - Mở browser và truy cập địa chỉ: http://localhost:5000
-```
+- Hoặc truy cập đường link sau để sử dụng: http://192.168.28.11:5000
 
-- Hoặc truy cập đường link sau để sử dụng:
-```
-http://192.168.28.11:5000
-```
 ## Authors
 
 * **Hoàng Đức Lương** - *15520462*
 * **Phạm Vũ Hùng** - *15520279*
-* **Forked Edition by Phan Phú Hào
+* **Forked Edition** by Phan Phú Hào
