@@ -84,6 +84,7 @@ $ mysql_secure_installation
 - Đặt password cho root@localhost:
 ```
 $ mysql -u root
+mysql> uninstall plugin validate_password;
 mysql> ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'test';
 ```
 - Mở MySQL server với file ir_system3:
