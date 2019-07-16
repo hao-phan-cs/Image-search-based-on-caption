@@ -83,6 +83,7 @@ run: python run_query.py
 
 ## Running the tests
 
+- Download file ir_system3 vào thư m� indexing https://drive.google.com/a/gm.uit.edu.vn/uc?id=11Ui_z6yBe6mBmjkzSh_K737XuzuXfBs_
 - Chạy trên local:
 ```
 1. Tạo database MySQL trên máy local bằng cách thực thi file ir_system3.sql trong thư mục indexing:
